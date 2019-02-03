@@ -143,7 +143,7 @@ class Grbl:
     def send(self, command):
         # real-time commands are sent immediately
         if command in realtime_commands:
-            if debug:
+            if self.debug:
                 print("Sending real-time command: {}".format(repr(command)))
             self.protocol.write(command)
         else:
