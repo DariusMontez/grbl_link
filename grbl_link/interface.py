@@ -232,7 +232,9 @@ class Grbl:
         return "{code}{flags}{words}".format(
                 code=code,
                 flags=''.join(flag for flag in a if flag),
-                words=''.join('{}{:0.2f}'.format(word.upper(), kw[word]) for word in kw if kw[word]))
+                words=''.join(
+                    '{}{:0.2f}'.format(word.upper(), kw[word]) 
+                    for word in kw if kw[word] is not None))
 
     def jog(self, feedrate, unit='mm', relative=True, **kw):
         cmd = '$J='
