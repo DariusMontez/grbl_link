@@ -123,6 +123,8 @@ class Grbl:
 
     def __init__(self, serial, protocol=SimpleProtocol, debug=False):
 
+        self.debug = debug
+
         self.state = GrblState()
 
         self.protocol = protocol(serial)
@@ -139,7 +141,13 @@ class Grbl:
         self.protocol.stop()
 
     def send(self, command):
-        self.protocol.enqueue(command)
+        # real-time commands are sent immediately
+        if command in realtime_commands:
+            if debug:
+                print("Sending real-time command: {}".format(repr(command))
+            self.protocol.write(command)
+        else:
+            self.protocol.enqueue(command)
 
     def add_message_handler(self, handler):
         def wrapper(message):
