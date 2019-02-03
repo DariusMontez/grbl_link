@@ -30,7 +30,9 @@ Interact seamlessly with a Grbl CNC controller. Stream files, jog, and receive s
 Features
 --------
 
-* TODO
+* Send GCODE and Grbl-specific commands
+* Built-in jog API
+* Receive push messages sent from Grbl
 
 Credits
 -------
