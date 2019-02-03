@@ -213,7 +213,7 @@ class Grbl:
             n (``int``): coordinate system index. Integer value 1 to 6.
         """
 
-        cmd = self.build_gcode('G10', ['L20', 'P{}'.format(n)], **axis)
+        cmd = self.build_gcode('G10', 'L20', 'P{}'.format(n), **axis)
         self.send(cmd)
 
     def set_active_coord_system(self, **axis):
