@@ -41,7 +41,7 @@ class ProtocolBase:
             self._process_serial()
             self._process_queue()
     
-    def _serial_write_safe(self, data):
+    def write(self, data):
         self.serial_mutex.acquire()
         self.serial.write(data)
         self.serial_mutex.release()
@@ -101,7 +101,7 @@ class CharacterCountProtocol(ProtocolBase):
             
             if predicted_planner_size < self.MAX_PLANNER_SIZE:
                 
-                self._serial_write_safe(command)
+                self.write(command)
                 self.planner_size = predicted_planner_size
                 print("SEND: {}\tplanner size: {}".format(command, self.planner_size))
                 self.send_queue.task_done()
@@ -124,7 +124,7 @@ class SimpleProtocol(ProtocolBase):
     def _process_queue(self):
         if not self.send_queue.empty() and self.clear_to_send:
             command = self.send_queue.get()
-            self._serial_write_safe(command)
+            self.write(command)
             print("SEND: {}".format(command))
             self.send_queue.task_done()
             self.clear_to_send = False
