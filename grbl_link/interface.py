@@ -187,6 +187,30 @@ class Grbl:
     def jog_cancel(self):
         self.send(b'\x85')
 
+    def select_coord_system(self, n):
+        """
+        Select coordinate system 1-6
+        
+        Ex: calling with n = 1 sends G54, and with n=4 sends a G57
+        """
+
+        code = "G{}".format(n+53)
+
+
+    def set_coord_system(self, n, **axis):
+        """
+        Set the current work position of the given coordinate system n
+
+        Arguments:
+            n (``int``): coordinate system index. Integer value 1 to 6.
+        """
+
+        cmd = self.build_gcode('G10', ['L20', 'P{}'.format(n)], **axis)
+        self.send(cmd)
+
+    def set_active_coord_system(self, **axis):
+        self.set_coord_system(0, **axis)
+
     
     # G-code functions
 
