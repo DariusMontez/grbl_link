@@ -144,7 +144,7 @@ class Grbl:
         # real-time commands are sent immediately
         if command in realtime_commands:
             if debug:
-                print("Sending real-time command: {}".format(repr(command))
+                print("Sending real-time command: {}".format(repr(command)))
             self.protocol.write(command)
         else:
             self.protocol.enqueue(command)
