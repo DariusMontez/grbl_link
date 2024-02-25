@@ -40,7 +40,7 @@ class ProtocolBase:
         while self._running:
             self._process_serial()
             self._process_queue()
-    
+
     def write(self, data):
         self.serial_mutex.acquire()
         self.serial.write(data)
@@ -98,9 +98,9 @@ class CharacterCountProtocol(ProtocolBase):
 
             command = self.send_queue.get()
             predicted_planner_size = self.planner_size + len(command)
-            
+
             if predicted_planner_size < self.MAX_PLANNER_SIZE:
-                
+
                 self.write(command)
                 self.planner_size = predicted_planner_size
                 print("SEND: {}\tplanner size: {}".format(command, self.planner_size))

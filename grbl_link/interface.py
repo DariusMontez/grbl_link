@@ -61,7 +61,7 @@ realtime_commands = [
     b'\x9B', # decrease 10%
     b'\x9C', # increase 1%
     b'\x9D', # decrease 1%
-    
+
     b'\x9E', # toggle spindle stop [HOLD]
 
     b'\xA0', # toggle flood coolant [IDLE, RUN, HOLD]
@@ -94,7 +94,7 @@ class GrblState:
         }
 
         self.settings = {}
-        
+
         self.sleeping = False
 
         # Grbl check mode
@@ -131,9 +131,9 @@ class Grbl:
         self.protocol.add_message_handler(self.state.message_handler)
         if debug:
             self.protocol.add_message_handler(debug_message_handler)
-        
+
         self.start()
-        
+
     def start(self):
         self.protocol.start()
 
@@ -198,11 +198,12 @@ class Grbl:
     def select_coord_system(self, n):
         """
         Select coordinate system 1-6
-        
+
         Ex: calling with n = 1 sends G54, and with n=4 sends a G57
         """
 
         code = "G{}".format(n+53)
+        self.send(code)
 
 
     def set_coord_system(self, n, **axis):
@@ -219,7 +220,7 @@ class Grbl:
     def set_active_coord_system(self, **axis):
         self.set_coord_system(0, **axis)
 
-    
+
     # G-code functions
 
     def _unit_code(self, unit):
@@ -233,7 +234,7 @@ class Grbl:
                 code=code,
                 flags=''.join(flag for flag in a if flag),
                 words=''.join(
-                    '{}{:0.2f}'.format(word.upper(), kw[word]) 
+                    '{}{:0.2f}'.format(word.upper(), kw[word])
                     for word in kw if kw[word] is not None))
 
     def jog(self, feedrate, unit='mm', relative=True, **kw):
@@ -242,7 +243,7 @@ class Grbl:
         params = [x.lower() for x in kw]
 
         assert 'x' in params or 'y' in params or 'z' in params
-        
+
         flags = []
 
         if relative:
