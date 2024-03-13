@@ -22,8 +22,6 @@ Grbl Link
 
 Interact seamlessly with a Grbl CNC controller. Stream files, jog, and receive status messages from a connected Grbl device.
 
-* Documentation: https://grbl-link.readthedocs.io.
-
 Quick Start
 -----------
 
